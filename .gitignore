@@ -6,3 +6,4 @@
 app/build/
 */build/
 gradle/wrapper/gradle-wrapper.jar
+app/src/main/res/drawable/delfi_logo.jpg
