@@ -10,8 +10,13 @@ Android приложение (Jetpack Compose) за бързо смятане н
 
 ## Изисквания за компилиране
 - Android Studio Giraffe/по-нова.
-- Gradle JVM = JDK 17–21 (Android Studio идва с JDK 21; JDK 24 не е съвместим с Gradle 8.7). Ако видите грешка „Gradle JVM v24" е несъвместим, изберете **File > Settings > Build, Execution, Deployment > Build Tools > Gradle > Gradle JDK = Embedded JDK 21** или посочете локален JDK 21 в PATH/JAVA_HOME. Синхронизацията ще бъде прекратена с ясна грешка, ако се ползва по-нова JVM.
-- Gradle wrapper script е включен (./gradlew). Двоичният файл `gradle/wrapper/gradle-wrapper.jar` не се пази в git; ако липсва, генериайте го с локално инсталиран Gradle чрез `gradle wrapper` (еднократно), след което работете само с `./gradlew`. Ако сте зад прокси, уверете се, че Java може да свали дистрибуцията от `services.gradle.org`.
+- Gradle JVM = JDK 17–21 (тествано с JDK 17; JDK 24 не е съвместим с Gradle 8.7). Ако видите грешка „Gradle JVM v24" е
+  несъвместим, изберете **File > Settings > Build, Execution, Deployment > Build Tools > Gradle > Gradle JDK = Embedded JDK 21**
+  или посочете локален JDK 17/21 в PATH/JAVA_HOME. Синхронизацията ще бъде прекратена с ясна грешка, ако се ползва JVM <17 или
+  >21.
+- Gradle wrapper script е включен (`./gradlew`). Двоичният файл `gradle/wrapper/gradle-wrapper.jar` не се пази в git; ако липсва,
+  генериайте го с локално инсталиран Gradle чрез `gradle wrapper` (еднократно), след което работете само с `./gradlew`. Ако сте зад
+  прокси, уверете се, че Java може да свали дистрибуцията от `services.gradle.org`.
 
 ## Стартиране
 - Отворете проекта с **Open > Existing Project** в Android Studio (root-папката, където са `settings.gradle.kts` и `gradlew`).
