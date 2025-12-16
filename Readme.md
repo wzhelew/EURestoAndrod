@@ -10,4 +10,13 @@ Android приложение (Jetpack Compose) за бързо смятане н
 
 ## Изисквания за компилиране
 - Android Studio Giraffe/по-нова.
-- Android Gradle Plugin 8.4+ и JDK 17.
+- JDK 17.
+- Gradle wrapper script е включен (./gradlew). Двоичният файл `gradle/wrapper/gradle-wrapper.jar` не се пази в git; ако липсва, генерайте го с локално инсталиран Gradle чрез `gradle wrapper` (еднократно), след което работете само с `./gradlew`. Ако сте зад прокси, уверете се, че Java може да свали дистрибуцията от `services.gradle.org`.
+
+## Стартиране
+- Отворете проекта с **Open > Existing Project** в Android Studio (root-папката, където са `settings.gradle.kts` и `gradlew`).
+- При нужда пуснете синхронизация или `./gradlew assembleDebug` от терминала за да се изтеглят зависимостите.
+
+## Почистване на остатъчни файлове
+- Изтрийте локалните кешове и билдна директория, ако проектът отказва да стартира: `rm -rf .gradle/ build/ app/build/`.
+- Тези папки не се пазят в git (в `.gitignore`), но могат да останат след неуспешна синхронизация или стар билд и да пречат на пускането в Android Studio.
