@@ -92,21 +92,21 @@ fun RestoCalculator(modifier: Modifier = Modifier) {
         )
 
         CurrencyTextField(
-            label = "Платено (лв)",
-            value = paidBgnInput,
-            onValueChange = { paidBgnInput = sanitizeInput(it) },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        CurrencyTextField(
             label = "Платено (EUR)",
             value = paidEuroInput,
             onValueChange = { paidEuroInput = sanitizeInput(it) },
             modifier = Modifier.fillMaxWidth()
         )
 
-        LabeledAmount(label = "Ресто (лв)", amount = changeBgn, currency = "лв")
+        CurrencyTextField(
+            label = "Платено (лв)",
+            value = paidBgnInput,
+            onValueChange = { paidBgnInput = sanitizeInput(it) },
+            modifier = Modifier.fillMaxWidth()
+        )
+
         LabeledAmount(label = "Ресто (EUR)", amount = changeEuro, currency = "€")
+        LabeledAmount(label = "Ресто (лв)", amount = changeBgn, currency = "лв")
     }
 }
 
