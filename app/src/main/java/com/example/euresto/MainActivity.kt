@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -76,11 +78,13 @@ fun RestoCalculator(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxSize()
-            .padding(horizontal = 20.dp, vertical = 16.dp)
+            .padding(horizontal = 20.dp, vertical = 16.dp),
+        verticalArrangement = Arrangement.SpaceBetween,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .weight(1f, fill = true)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -123,13 +127,14 @@ fun RestoCalculator(modifier: Modifier = Modifier) {
 
             LabeledAmount(label = "Ресто (EUR)", amount = changeEuro, currency = "€")
             LabeledAmount(label = "Ресто (лв)", amount = changeBgn, currency = "лв")
+
+            Spacer(modifier = Modifier.height(12.dp))
         }
 
         LogoSection(
             logoResId = logoResId,
             modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(top = 16.dp)
+                .padding(top = 12.dp)
         )
     }
 }
