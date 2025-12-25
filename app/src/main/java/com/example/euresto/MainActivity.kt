@@ -75,7 +75,7 @@ fun RestoCalculator(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val logoResId = remember { context.resources.getIdentifier("delfi_logo", "drawable", context.packageName) }
 
-    Column(
+    Box(
         modifier = modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp, vertical = 16.dp),
