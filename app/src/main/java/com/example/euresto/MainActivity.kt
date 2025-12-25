@@ -4,13 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -31,6 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.euresto.ui.theme.EURestoAndroidTheme
@@ -70,68 +74,68 @@ fun RestoCalculator(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val logoResId = remember { context.resources.getIdentifier("delfi_logo", "drawable", context.packageName) }
 
-    Column(
+    Box(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 20.dp, vertical = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .padding(horizontal = 20.dp, vertical = 16.dp)
     ) {
-        if (logoResId != 0) {
-            Image(
-                painter = painterResource(id = logoResId),
-                contentDescription = "Delfi лого",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(max = 180.dp),
-                contentScale = ContentScale.FillWidth
-            )
-        } else {
+        Column(
+            modifier = Modifier
+                .align(Alignment.TopCenter)
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+                .padding(bottom = 160.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
             Text(
-                text = "Добавете delfi_logo.jpg в app/src/main/res/drawable/ за да се покаже логото.",
-                style = MaterialTheme.typography.bodySmall,
+                text = "EUR ➜ BGN калкулатор за ресто",
+                style = MaterialTheme.typography.titleLarge,
                 textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth(),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+
+            CurrencyTextField(
+                label = "Сметка (EUR)",
+                value = euroAmountInput,
+                onValueChange = { euroAmountInput = sanitizeInput(it) },
                 modifier = Modifier.fillMaxWidth()
             )
+
+            LabeledAmount(
+                label = "Сума в лева",
+                amount = totalBgn,
+                currency = "лв"
+            )
+
+            CurrencyTextField(
+                label = "Платено (EUR)",
+                value = paidEuroInput,
+                onValueChange = { paidEuroInput = sanitizeInput(it) },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            CurrencyTextField(
+                label = "Платено (лв)",
+                value = paidBgnInput,
+                onValueChange = { paidBgnInput = sanitizeInput(it) },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            LabeledAmount(label = "Ресто (EUR)", amount = changeEuro, currency = "€")
+            LabeledAmount(label = "Ресто (лв)", amount = changeBgn, currency = "лв")
         }
 
-        Text(
-            text = "EUR ➜ BGN калкулатор за ресто",
-            style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
+        LogoSection(
+            logoResId = logoResId,
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(top = 12.dp)
         )
-
-        CurrencyTextField(
-            label = "Сметка (EUR)",
-            value = euroAmountInput,
-            onValueChange = { euroAmountInput = sanitizeInput(it) },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        LabeledAmount(
-            label = "Сума в лева",
-            amount = totalBgn,
-            currency = "лв"
-        )
-
-        CurrencyTextField(
-            label = "Платено (EUR)",
-            value = paidEuroInput,
-            onValueChange = { paidEuroInput = sanitizeInput(it) },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        CurrencyTextField(
-            label = "Платено (лв)",
-            value = paidBgnInput,
-            onValueChange = { paidBgnInput = sanitizeInput(it) },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        LabeledAmount(label = "Ресто (EUR)", amount = changeEuro, currency = "€")
-        LabeledAmount(label = "Ресто (лв)", amount = changeBgn, currency = "лв")
     }
 }
 
@@ -159,6 +163,27 @@ private fun LabeledAmount(label: String, amount: Double, currency: String, modif
             text = String.format("%.2f %s", amount, currency),
             style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
             modifier = Modifier.padding(top = 4.dp)
+        )
+    }
+}
+
+@Composable
+private fun LogoSection(logoResId: Int, modifier: Modifier = Modifier) {
+    if (logoResId != 0) {
+        Image(
+            painter = painterResource(id = logoResId),
+            contentDescription = "Delfi лого",
+            modifier = modifier
+                .fillMaxWidth()
+                .sizeIn(maxHeight = 140.dp),
+            contentScale = ContentScale.FillWidth
+        )
+    } else {
+        Text(
+            text = "Добавете delfi_logo.jpg в app/src/main/res/drawable/ за да се покаже логото.",
+            style = MaterialTheme.typography.bodySmall,
+            textAlign = TextAlign.Center,
+            modifier = modifier.fillMaxWidth()
         )
     }
 }
