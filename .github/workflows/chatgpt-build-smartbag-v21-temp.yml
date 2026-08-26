@@ -1,0 +1,32 @@
+name: ChatGPT temporary SmartBag v2.1 build
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ '.github/workflows/chatgpt-build-smartbag-v21-temp.yml' ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: chatgpt-nfc-uchebnici-20260826
+      - name: Apply SmartBag v2.1 overlay
+        run: |
+          base64 -d smartbag-v2-overlay.b64 > /tmp/smartbag-v21.zip
+          unzip -o /tmp/smartbag-v21.zip -d nfc-app
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+      - name: Build debug APK
+        working-directory: nfc-app
+        run: gradle assembleDebug --stacktrace
+      - uses: actions/upload-artifact@v4
+        with:
+          name: UmnaRanica-v2.1-apk
+          path: nfc-app/app/build/outputs/apk/debug/app-debug.apk
